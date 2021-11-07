@@ -1,15 +1,87 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Screen1 extends StatefulWidget {
+class Screen1 extends StatelessWidget {
   const Screen1({Key? key}) : super(key: key);
 
   @override
-  State<Screen1> createState() => _Screen1State();
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        title: const Center(
+          child: Text(
+            'New hits',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        leading: const Icon(
+          Icons.arrow_back_ios,
+          size: 20,
+          color: Colors.black,
+        ),
+        actions: const [
+          Icon(
+            Icons.search_rounded,
+            color: Colors.black,
+            size: 25,
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Icon(
+            Icons.shopping_bag_outlined,
+            color: Colors.black,
+            size: 25,
+          )
+        ],
+      ),
+      body: Container(
+        color: Colors.white,
+        child: GridView.count(
+          crossAxisCount: 2,
+          scrollDirection: Axis.horizontal,
+          crossAxisSpacing: 10,
+          padding: const EdgeInsets.all(10),
+          children: [
+            GridViewElement(
+              width: width,
+              height: height,
+            ),
+            GridViewElement(
+              width: width,
+              height: height,
+            ),
+            GridViewElement(
+              width: width,
+              height: height,
+            ),
+            GridViewElement(
+              width: width,
+              height: height,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _Screen1State extends State<Screen1> {
-  Widget gridviewElement(double width, double height) {
+class GridViewElement extends StatelessWidget {
+  final double? width, height;
+  const GridViewElement({Key? key, required this.width, required this.height})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -20,7 +92,7 @@ class _Screen1State extends State<Screen1> {
             },
             child: Container(
               height: height,
-              width: width / 2,
+              width: width! / 2,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
@@ -85,64 +157,6 @@ class _Screen1State extends State<Screen1> {
           height: 5,
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        title: const Center(
-          child: Text(
-            'New hits',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        leading: const Icon(
-          Icons.arrow_back_ios,
-          size: 20,
-          color: Colors.black,
-        ),
-        actions: const [
-          Icon(
-            Icons.search_rounded,
-            color: Colors.black,
-            size: 25,
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Icon(
-            Icons.shopping_bag_outlined,
-            color: Colors.black,
-            size: 25,
-          )
-        ],
-      ),
-      body: Container(
-        color: Colors.white,
-        child: GridView.count(
-          crossAxisCount: 2,
-          scrollDirection: Axis.horizontal,
-          crossAxisSpacing: 10,
-          padding: const EdgeInsets.all(10),
-          children: [
-            gridviewElement(width, height),
-            gridviewElement(width, height),
-            gridviewElement(width, height),
-            gridviewElement(width, height),
-          ],
-        ),
-      ),
     );
   }
 }

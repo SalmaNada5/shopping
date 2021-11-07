@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
-import 'package:shopping/lists.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shopping/size_dropdown.dart';
+import '../qty_dropdown.dart';
 
 class Screen2 extends StatefulWidget {
   const Screen2({Key? key}) : super(key: key);
@@ -13,99 +14,7 @@ class Screen2 extends StatefulWidget {
 class _Screen2State extends State<Screen2> {
   bool hasPressed = true;
 
-  String? selectedSize;
-  String? selectedQty;
-  DropdownButton<String> sizeDropdown() {
-    List<DropdownMenuItem<String>> dropdownItems = [];
-    for (String size in sizes) {
-      var newSize = DropdownMenuItem(
-        child: Text(size),
-        value: size,
-      );
-      dropdownItems.add(newSize);
-    }
-    return DropdownButton<String>(
-      items: dropdownItems,
-      value: selectedSize,
-      icon: const Icon(
-        Icons.keyboard_arrow_down,
-      ),
-      isExpanded: true,
-      hint: Row(
-        children: const [
-          Text(
-            'Size: ',
-            style: TextStyle(color: Colors.grey),
-          ),
-          Text(
-            'XS',
-            style: TextStyle(color: Colors.black),
-          ),
-        ],
-      ),
-      underline: const SizedBox(),
-      onChanged: (value) {
-        setState(() {
-          selectedSize = value;
-        });
-      },
-    );
-  }
-
-  DropdownButton<String> qtyDropdown() {
-    List<DropdownMenuItem<String>> dropdownItems = [];
-    for (String q in qty) {
-      var newItem = DropdownMenuItem(
-        child: Text(q),
-        value: q,
-      );
-      dropdownItems.add(newItem);
-    }
-    return DropdownButton<String>(
-      items: dropdownItems,
-      value: selectedQty,
-      icon: const Icon(
-        Icons.keyboard_arrow_down,
-      ),
-      hint: Row(
-        children: const [
-          Text(
-            'Qty: ',
-            style: TextStyle(color: Colors.grey),
-          ),
-          Text(
-            '1',
-            style: TextStyle(color: Colors.black),
-          ),
-        ],
-      ),
-      underline: const SizedBox(),
-      onChanged: (value) {
-        setState(() {
-          selectedQty = value;
-        });
-      },
-      isExpanded: true,
-    );
-  }
-
   PageController? controller;
-  Widget pageViewContainer() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 35, left: 5, right: 5),
-      width: 100,
-      height: 100,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-        image: DecorationImage(
-          image: AssetImage('images/image.jpg'),
-          fit: BoxFit.fill,
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,14 +53,11 @@ class _Screen2State extends State<Screen2> {
             color: Colors.white,
             height: MediaQuery.of(context).size.height / 2,
             child: PageIndicatorContainer(
-              child: PageView(
-                children: <Widget>[
-                  pageViewContainer(),
-                  pageViewContainer(),
-                  pageViewContainer(),
-                  pageViewContainer(),
-                ],
+              child: PageView.builder(
+                itemCount: 4,
                 controller: controller,
+                itemBuilder: (BuildContext context, int index) =>
+                    const PageViewContainer(),
               ),
               length: 4,
               padding: const EdgeInsets.all(15),
@@ -249,7 +155,7 @@ class _Screen2State extends State<Screen2> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           width: MediaQuery.of(context).size.width,
-                          child: sizeDropdown(),
+                          child: const SizeDropdown(),
                         ),
                       ),
                       Container(
@@ -260,7 +166,7 @@ class _Screen2State extends State<Screen2> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         width: MediaQuery.of(context).size.width / 3,
-                        child: qtyDropdown(),
+                        child: const QtyDropdown(),
                       ),
                     ],
                   ),
@@ -327,6 +233,28 @@ class _Screen2State extends State<Screen2> {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class PageViewContainer extends StatelessWidget {
+  const PageViewContainer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 35, left: 5, right: 5),
+      width: 100,
+      height: 100,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+        image: DecorationImage(
+          image: AssetImage('images/image.jpg'),
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }
