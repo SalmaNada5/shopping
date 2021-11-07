@@ -14,7 +14,9 @@ class Screen2 extends StatefulWidget {
 class _Screen2State extends State<Screen2> {
   bool hasPressed = true;
 
-  PageController? controller;
+  PageController? controller = PageController(
+    viewportFraction: 0.6,
+  );
 
   @override
   Widget build(BuildContext context) {

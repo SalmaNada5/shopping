@@ -46,29 +46,18 @@ class Screen1 extends StatelessWidget {
       ),
       body: Container(
         color: Colors.white,
-        child: GridView.count(
-          crossAxisCount: 2,
-          scrollDirection: Axis.horizontal,
-          crossAxisSpacing: 10,
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            childAspectRatio: 9 / 16,
+          ),
           padding: const EdgeInsets.all(10),
-          children: [
-            GridViewElement(
-              width: width,
-              height: height,
-            ),
-            GridViewElement(
-              width: width,
-              height: height,
-            ),
-            GridViewElement(
-              width: width,
-              height: height,
-            ),
-            GridViewElement(
-              width: width,
-              height: height,
-            ),
-          ],
+          itemCount: 8,
+          itemBuilder: (c, index) => GridViewElement(
+            width: width,
+            height: height,
+          ),
         ),
       ),
     );
